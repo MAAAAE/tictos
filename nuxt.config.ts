@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vesp/nuxt-fontawesome'],
     fontawesome: {
         icons: {
-            solid: ['user', 'home'],
+            solid: ['user', 'home', 'door-open'],
             regular: ['comment'],
             brands: ['github'],
         },

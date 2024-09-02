@@ -15,6 +15,10 @@
             <FontAwesome icon="user" class="mr-1"/>
             About
           </NuxtLink>
+          <NuxtLink to="/about" @click="handleLogout()" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">
+            <FontAwesome icon="door-open" class="mr-1"/>
+            logout
+          </NuxtLink>
         </div>
       </div>
     </nav>
@@ -39,8 +43,16 @@
 
 <script setup lang="ts">
 import {type NavLink, navLinks} from "~/utils/navLinks";
+import {useAuthStore} from "~/store/auth";
+
 defineProps<{ links: NavLink[] }>();
 const links = computed(() => navLinks)
+const router = useRouter()
+const { logUserOut } = useAuthStore()
+
+const handleLogout = () => {
+  logUserOut()
+}
 </script>
 
 <style scoped>
