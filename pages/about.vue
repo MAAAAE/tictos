@@ -5,10 +5,9 @@
         <!-- Avatar -->
         <div class="bg-white p-3 rounded-full shadow-md mx-auto mb-4">
           <FontAwesome icon="user" class="h-12 w-12 text-indigo-600" />
+          <div class="text-2xl font-bold text-indigo-600 mb-2">{{ username }}</div>
+
         </div>
-        <!-- User Info -->
-        <div class="text-2xl font-bold text-white mb-2">{{ username }}</div>
-        <div class="text-sm text-indigo-200">User ID: {{ username }}</div>
       </div>
       <div class="px-6 py-4 text-center">
         <!-- GitHub Badge -->
