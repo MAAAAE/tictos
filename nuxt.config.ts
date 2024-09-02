@@ -17,9 +17,15 @@ export default defineNuxtConfig({
         }
     },
 
-    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vesp/nuxt-fontawesome'],
+    fontawesome: {
+        icons: {
+            solid: ['user', 'home'],
+            regular: ['comment'],
+            brands: ['github'],
+        },
+    },
     imports: {
         dirs: ['./stores']
     },
-
 })

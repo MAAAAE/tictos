@@ -7,8 +7,14 @@
           <NuxtLink to="/" class="hover:text-gray-600">Maeptos</NuxtLink>
         </div>
         <div>
-          <NuxtLink to="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">Home</NuxtLink>
-          <NuxtLink to="/about" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">About</NuxtLink>
+          <NuxtLink to="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">
+            <FontAwesome icon="home" class="mr-1"/>
+            Home
+          </NuxtLink>
+          <NuxtLink to="/about" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">
+            <FontAwesome icon="user" class="mr-1"/>
+            About
+          </NuxtLink>
         </div>
       </div>
     </nav>
