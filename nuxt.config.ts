@@ -13,8 +13,10 @@ export default defineNuxtConfig({
         apiSecret: '123',
         // Keys within public are also exposed client-side
         public: {
-            apiBase: '/api'
-        }
+            apiBase: '/api',
+        },
+        nodeUrl: process.env.APTOS_NODE_URL,
+        faucetUrl: process.env.APTOS_FAUCET_URL,
     },
 
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vesp/nuxt-fontawesome'],
@@ -28,4 +30,5 @@ export default defineNuxtConfig({
     imports: {
         dirs: ['./stores']
     },
+
 })
