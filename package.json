@@ -10,12 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@aptos-labs/ts-sdk": "^1.27.1",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.4",
     "@vesp/nuxt-fontawesome": "^1.1.0",
+    "aptos": "^1.21.0",
     "nuxt": "^3.13.0",
     "pinia": "^2.2.2",
     "vue": "latest"
