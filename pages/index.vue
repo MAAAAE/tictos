@@ -18,6 +18,10 @@
                 </div>
                 <div class="px-6 py-4">
                   <p class="text-gray-800">Content for the first card. Add details or metrics here.</p>
+                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="goToBuyPage">
+                    Click Me
+                  </button>
+
                 </div>
               </div>
 
@@ -50,6 +54,13 @@
 </template>
 
 <script setup lang="ts">
+const eventId = ref(123);  // Example eventId, replace it with the actual eventId
+const router = useRouter();
+
+// Method to navigate to the buy page
+const goToBuyPage = () => {
+  router.push(`/buy/${eventId.value}`);
+};
 </script>
 
 <style scoped>
