@@ -204,6 +204,6 @@ const getAccount = async () => {
 }
 
 onMounted(() => {
-  getAccount()
+  // getAccount()
 })
 </script>
