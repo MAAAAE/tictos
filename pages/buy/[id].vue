@@ -2,7 +2,7 @@
   <NuxtLayout>
     <div>
       <!-- Form for private key input -->
-      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your account." />
+      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your account."/>
     </div>
   </NuxtLayout>
 </template>
@@ -10,14 +10,13 @@
 <script setup lang="ts">
 
 import {ref} from 'vue'
-import {AptosAccount, AptosClient, HexString} from "aptos";
+import {AptosAccount, HexString} from "aptos";
 import PrivateKeyForm from "~/components/KeyForm.vue";
 import {toast} from "vue3-toastify";
-const client: AptosClient = new AptosClient("http://localhost:8080");
 
 const route = useRoute()
 const privateKey = ref('')
-const {$toast} = useNuxtApp()
+const {$toast, $aptosClient} = useNuxtApp()
 
 const handleSubmit = async (key: string) => {
   const id = $toast(
@@ -37,13 +36,13 @@ const handleSubmit = async (key: string) => {
       arguments: [route.params.id],
     };
 
-    const txnRequest = await client.generateTransaction(account.address(), payload);
+    const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);
 
     // Sign the transaction
-    const signedTxn = await client.signTransaction(account, txnRequest);
-    const txnResponse = await client.submitTransaction(signedTxn);
+    const signedTxn = await $aptosClient.signTransaction(account, txnRequest);
+    const txnResponse = await $aptosClient.submitTransaction(signedTxn);
     // Wait for the transaction to be confirmed
-    await client.waitForTransaction(txnResponse.hash);
+    await $aptosClient.waitForTransaction(txnResponse.hash);
 
     // toast.done(id)
     $toast.update(id, {
