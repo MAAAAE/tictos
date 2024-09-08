@@ -58,6 +58,7 @@ import {AptosAccount, HexString} from "aptos";
 import PrivateKeyForm from "~/components/KeyForm.vue";
 import {toast} from "vue3-toastify";
 import {useEventStore} from "~/store/event";
+import {useRouter} from "nuxt/app";
 
 const route = useRoute()
 const privateKey = ref('')
@@ -65,6 +66,9 @@ const {$toast, $aptosClient} = useNuxtApp()
 
 const eventStore = useEventStore()
 const event = eventStore.getEventByIndex(route.params.id)
+const runtimeConfig = useRuntimeConfig()
+const router = useRouter();
+
 
 const handleSubmit = async (key: string) => {
   const id = $toast(
@@ -79,7 +83,7 @@ const handleSubmit = async (key: string) => {
     const account = new AptosAccount(HexString.ensure(privateKey.value).toUint8Array());
     const payload = {
       type: "entry_function_payload",
-      function: "0xf3228d5a50466fef943575dd05f9da23c6b5842194889f5112bdc4ec6f8e2329::EventTicket::create_ticket",
+      function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::create_ticket`,
       type_arguments: [],
       arguments: [route.params.id],
     };
@@ -100,6 +104,7 @@ const handleSubmit = async (key: string) => {
       autoClose: 2000,
       type: toast.TYPE.SUCCESS
     })
+    await router.push('/tickets')
 
   } catch (err) {
     console.error('Error initializing event store:', err);

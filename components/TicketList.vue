@@ -1,5 +1,11 @@
 <!-- components/TicketList.vue -->
 <template>
+
+  <h1
+      class="text-4xl font-bold text-black border-b-4 border-black mb-8 pb-2"
+  >
+    Review your Tickets in Account
+  </h1>
   <!-- Ticket Cards Container -->
   <PrivateKeyForm @submit="getTicketStore" placeholderText="enter your account" />
 
@@ -37,11 +43,18 @@
       </div>
     </div>
   </div>
+  <ModalComponent
+      :isVisible="showModal"
+      :ticketId="selectedTicketId"
+      @submit="handleSubmit"
+      @close="showModal = false"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import PrivateKeyForm from "~/components/KeyForm.vue";
+import {AptosAccount, HexString} from "aptos";
 
 const {$aptosClient, $toast} = useNuxtApp();
 
@@ -55,10 +68,14 @@ interface Ticket {
 
 // Initialize the tickets array
 const myTickets = ref<Ticket[]>([]);
+// user's account key
+const userAccount = ref('');
+
 
 // Mock function to simulate fetching tickets (replace with real logic)
+const runtimeConfig = useRuntimeConfig();
 
-const resourceType = '0xf3228d5a50466fef943575dd05f9da23c6b5842194889f5112bdc4ec6f8e2329::EventTicket::TicketStore'; // Replace with the correct module and resource path
+const resourceType = `${runtimeConfig.public.accountPrivateKey}::EventTicket::TicketStore`; // Replace with the correct module and resource path
 
 async function getTicketStore(key: string) {
   try {
@@ -70,16 +87,51 @@ async function getTicketStore(key: string) {
       tickets: Array<Ticket>
     };
     myTickets.value = structValue.tickets
+    userAccount.value = key
   } catch (error) {
     console.error('Error fetching TicketStore:', error);
     $toast.error(`${error}`);
   }
 }
 
+const showModal = ref(false);
+const selectedTicketId = ref('');
+
+const handleSubmit = async (recipient: string) => {
+  // Handle the recipient data here
+  console.log('Submitted recipient:', recipient);
+  showModal.value = false; // Close modal after submit
+  selectedTicketId.value = '';
+
+  try {
+    const account = new AptosAccount(HexString.ensure(recipient).toUint8Array());
+    const payload = {
+      type: "entry_function_payload",
+      function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::transfer_ticket`,
+      type_arguments: [],
+      arguments: [userAccount.value, recipient],
+    };
+    const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);
+
+    // Sign the transaction
+    const signedTxn = await $aptosClient.signTransaction(account, txnRequest);
+    const txnResponse = await $aptosClient.submitTransaction(signedTxn);
+    // Wait for the transaction to be confirmed
+    await $aptosClient.waitForTransaction(txnResponse.hash);
+
+  } catch (e) {
+    $toast.error(`error occur during transferring. ${e}`)
+  }
+
+};
+
+
 // Transfer ticket function (mock, replace with real logic)
 const transferTicket = (ticketId: string) => {
   console.log(`Transfer ticket with ID: ${ticketId}`);
-  // Implement the ticket transfer logic here
+  showModal.value = true
+  selectedTicketId.value = ticketId
+  // Wait for the transaction to be confirmed
 };
 
 // Fetch tickets on component mount

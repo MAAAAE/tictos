@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         public: {
             apiBase: '/api',
             nodeUrl: '',
-            faucetUrl: ''
+            faucetUrl: '',
+            accountPrivateKey: ''
         },
 
     },
