@@ -28,15 +28,27 @@
             />
           </div>
           <!-- Password Input -->
-          <div class="mb-6">
+          <div class="mb-4">
             <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
             <input
                 type="password"
                 id="password"
                 v-model="user.password"
                 ref="passwordRef"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter your password"
+            />
+          </div>
+          <!-- Private Key Input -->
+          <div class="mb-6">
+            <label for="privateKey" class="block text-gray-700 text-sm font-bold mb-2">Private Key</label>
+            <input
+                type="password"
+                id="privateKey"
+                v-model="user.privateKey"
+                ref="privateKeyRef"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your private key"
             />
           </div>
           <!-- Submit Button -->
@@ -59,6 +71,8 @@
 import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
 import { useAuthStore } from '~/store/auth'; // import the auth store we just created
 
+const { $toast } = useNuxtApp();
+
 const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
 
 const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
@@ -66,10 +80,15 @@ const { authenticated } = storeToRefs(useAuthStore()); // make authenticated sta
 const user = ref({
   username: 'addisonw',
   password: 'addisonwpass',
+  privateKey: '',
 });
 const router = useRouter();
 
 const login = async () => {
+  if (!user.value.privateKey) {
+    $toast.error('please enter your private key for demo.');
+    return;
+  }
   await authenticateUser(user.value); // call authenticateUser and pass the user object
   // redirect to homepage if user is authenticated
   if (authenticated) {
