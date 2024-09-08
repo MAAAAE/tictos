@@ -49,7 +49,7 @@
                     Date: {{ formatDate(event.date) }}
                   </p>
                   <p class="text-gray-800">
-                    Price: {{ event.ticket_price }} USD
+                    Price: {{ event.ticket_price }} APT
                   </p>
                   <p class="text-gray-800">
                     Tickets left: {{ event.available_tickets }}
