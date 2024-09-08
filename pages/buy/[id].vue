@@ -2,7 +2,7 @@
   <NuxtLayout>
     <div>
       <!-- Form for private key input -->
-      <PrivateKeyForm @submit="handleSubmit" />
+      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your account." />
     </div>
   </NuxtLayout>
 </template>
@@ -12,12 +12,21 @@
 import {ref} from 'vue'
 import {AptosAccount, AptosClient, HexString} from "aptos";
 import PrivateKeyForm from "~/components/KeyForm.vue";
+import {toast} from "vue3-toastify";
 const client: AptosClient = new AptosClient("http://localhost:8080");
 
 const route = useRoute()
 const privateKey = ref('')
+const {$toast} = useNuxtApp()
 
 const handleSubmit = async (key: string) => {
+  const id = $toast(
+      'Please wait...',
+      {
+        position: $toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
+      },
+  );
   privateKey.value = key
   try {
     const account = new AptosAccount(HexString.ensure(privateKey.value).toUint8Array());
@@ -35,6 +44,15 @@ const handleSubmit = async (key: string) => {
     const txnResponse = await client.submitTransaction(signedTxn);
     // Wait for the transaction to be confirmed
     await client.waitForTransaction(txnResponse.hash);
+
+    // toast.done(id)
+    $toast.update(id, {
+      render: (props) => {
+        return h('div', `buy a ticket! ${txnResponse.hash}`);
+      },
+      autoClose: 2000,
+      type: toast.TYPE.SUCCESS
+    })
 
   } catch (err) {
     console.error('Error initializing event store:', err);

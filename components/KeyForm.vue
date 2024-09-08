@@ -26,7 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
+import {ref, defineEmits} from 'vue';
+
+const {$toast} = useNuxtApp()
 
 // Define props
 const props = defineProps<{
