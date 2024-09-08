@@ -51,7 +51,7 @@ const getBalance = async () => {
 
     const accountAPTAmount: number = await aptos.getAccountAPTAmount({accountAddress: account.address().toString()})
 
-    coinBalance.value = String(accountAPTAmount);
+    coinBalance.value = String(accountAPTAmount / 100_000_000);
     address.value = account.address().toString();
   } catch (error) {
     console.error('Error Fetching Coin Balance:', error);

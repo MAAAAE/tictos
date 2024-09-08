@@ -9,7 +9,7 @@ export const useEventStore = defineStore("event", {
         date: "20240910",
         id: "0",
         name: "Rock Festival",
-        ticket_price: "150",
+        ticket_price: 150,
         image: "https://picsum.photos/seed/one/300/150",
       },
       {
@@ -17,7 +17,7 @@ export const useEventStore = defineStore("event", {
         date: "20240912",
         id: "1",
         name: "Jazz Night",
-        ticket_price: "80",
+        ticket_price: 80,
         image: "https://picsum.photos/seed/two/300/150",
       },
       {
@@ -25,7 +25,7 @@ export const useEventStore = defineStore("event", {
         date: "20240915",
         id: "2",
         name: "Pop Concert",
-        ticket_price: "120",
+        ticket_price: 120,
         image: "https://picsum.photos/seed/three/300/150",
       },
       {
@@ -33,7 +33,7 @@ export const useEventStore = defineStore("event", {
         date: "20240920",
         id: "3",
         name: "Classical Evening",
-        ticket_price: "200",
+        ticket_price: 200,
         image: "https://picsum.photos/seed/four/300/150",
       },
       {
@@ -41,7 +41,7 @@ export const useEventStore = defineStore("event", {
         date: "20240925",
         id: "4",
         name: "Indie Music Fest",
-        ticket_price: "90",
+        ticket_price: 90,
         image: "https://picsum.photos/seed/five/300/150",
       },
     ],

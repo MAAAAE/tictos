@@ -70,8 +70,6 @@ import {useEventStore} from "~/store/event";
 import {useRouter} from "nuxt/app";
 import { useAuthStore } from "~/store/auth";
 
-//99945650
-
 const route = useRoute()
 const privateKey = ref('')
 const {$toast, $aptosClient} = useNuxtApp()
@@ -98,7 +96,7 @@ const handleSubmit = async (key: string) => {
       type: "entry_function_payload",
       function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::create_ticket`,
       type_arguments: [],
-      arguments: [route.params.id, event.ticket_price],
+      arguments: [route.params.id, event.ticket_price * 100_000_000],
     };
 
     const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);
@@ -107,21 +105,39 @@ const handleSubmit = async (key: string) => {
     const signedTxn = await $aptosClient.signTransaction(account, txnRequest);
     const txnResponse = await $aptosClient.submitTransaction(signedTxn);
     // Wait for the transaction to be confirmed
-    await $aptosClient.waitForTransaction(txnResponse.hash);
+    let newVar = await $aptosClient.waitForTransaction(txnResponse.hash);
 
-    // toast.done(id)
+    const transaction = await $aptosClient.getTransactionByHash(txnResponse.hash) as TransactionStatus;
+    if (!transaction.success) {
+      throw new Error(transaction.vm_status);
+    }
+    await router.push('/tickets')
+    eventStore.buying(route.params.id)
     $toast.update(id, {
       render: (props) => {
-        return h('div', `buy a ticket! ${txnResponse.hash}`);
+        return h('div', `process is done.`);
       },
       autoClose: 2000,
       type: toast.TYPE.SUCCESS
     })
-    await router.push('/tickets')
-    eventStore.buying(route.params.id)
+
   } catch (err) {
+    $toast.error(err.message)
     console.error('Error initializing event store:', err);
+    $toast.update(id, {
+      render: (props) => {
+        return h('div', `process is done.`);
+      },
+      autoClose: 2000,
+      type: toast.TYPE.SUCCESS
+    })
   }
+  // toast.done(id)
+
+}
+interface TransactionStatus {
+  success: boolean;
+  vm_status: string;
 }
 
 

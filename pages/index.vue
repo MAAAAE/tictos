@@ -59,9 +59,9 @@
                   <button
                       :class="[
           'w-full py-2 px-4 rounded text-white font-bold transition-colors duration-300',
-          event.available_tickets === '0' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
+          event.available_tickets === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
         ]"
-                      :disabled="event.available_tickets === '0'" @click="goToBuyPage(event.id)"
+                      :disabled="event.available_tickets === 0" @click="goToBuyPage(event.id)"
 
                   >
                     Buy
