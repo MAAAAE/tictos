@@ -1,6 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
+    runtimeConfig: {
+        // The private keys which are only available server-side
+
+        // Keys within public are also exposed client-side
+        public: {
+            apiBase: '/api',
+            nodeUrl: '',
+            faucetUrl: '',
+            accountPrivateKey: ''
+        },
+
+    },
+
     devtools: {
         enabled: true,
         timeline: {
@@ -8,21 +21,10 @@ export default defineNuxtConfig({
         },
     },
 
-    runtimeConfig: {
-        // The private keys which are only available server-side
-        apiSecret: '123',
-        // Keys within public are also exposed client-side
-        public: {
-            apiBase: '/api',
-        },
-        nodeUrl: process.env.APTOS_NODE_URL,
-        faucetUrl: process.env.APTOS_FAUCET_URL,
-    },
-
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vesp/nuxt-fontawesome'],
     fontawesome: {
         icons: {
-            solid: ['user', 'home', 'door-open'],
+            solid: ['user', 'home', 'door-open', 'calendar-day', 'signature', 'money-bill'],
             regular: ['comment'],
             brands: ['github'],
         },

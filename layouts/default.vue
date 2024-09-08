@@ -4,7 +4,7 @@
     <nav class="bg-white border-b border-gray-200">
       <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-lg font-semibold text-gray-800">
-          <NuxtLink to="/" class="hover:text-gray-600">Maeptos</NuxtLink>
+          <NuxtLink to="/" class="hover:text-gray-600">TICTOS</NuxtLink>
         </div>
         <div>
           <NuxtLink to="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-200">
@@ -52,6 +52,7 @@ const { logUserOut } = useAuthStore()
 
 const handleLogout = () => {
   logUserOut()
+  router.push('/login')
 }
 </script>
 
