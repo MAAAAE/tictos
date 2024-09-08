@@ -124,6 +124,8 @@ const handleSubmit = async (recipient: string) => {
     $toast.error(`error occur during transferring. ${e}`)
   }
   selectedTicketId.value = '';
+  $toast('transferred successfully!')
+  await getTicketStore(user.privateKey)
 };
 
 
