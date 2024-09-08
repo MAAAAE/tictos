@@ -43,7 +43,7 @@
 import { ref } from 'vue';
 import PrivateKeyForm from "~/components/KeyForm.vue";
 
-const {$aptosClient} = useNuxtApp();
+const {$aptosClient, $toast} = useNuxtApp();
 
 interface Ticket {
   id: string;
@@ -72,6 +72,7 @@ async function getTicketStore(key: string) {
     myTickets.value = structValue.tickets
   } catch (error) {
     console.error('Error fetching TicketStore:', error);
+    $toast.error(`${error}`);
   }
 }
 

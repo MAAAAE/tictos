@@ -2,6 +2,18 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## prerequisite
+
+```
+create .env file
+add two envrionment variables.
+
+(optional)
+NUXT_PUBLIC_FAUCET_URL="http://localhost:8081"
+(required)
+NUXT_PUBLIC_NODE_URL="http://localhost:8080"
+```
+
 ## Setup
 
 Make sure to install the dependencies:

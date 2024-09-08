@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto">
           <!-- Page Title -->
           <h1
-            class="text-4xl font-bold text-black border-b-4 border-black mb-8 pb-2"
+              class="text-4xl font-bold text-black border-b-4 border-black mb-8 pb-2"
           >
             Buying a ticket NFT
           </h1>
@@ -15,27 +15,27 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- 카드 생성 -->
             <div
-              v-for="(event, index) in events"
-              :key="index"
-              class="bg-white rounded-xl shadow-md overflow-hidden transform transition hover:scale-105 duration-300 flex"
+                v-for="(event, index) in events"
+                :key="index"
+                class="bg-white rounded-xl shadow-md overflow-hidden transform transition hover:scale-105 duration-300 flex"
             >
               <!-- 이미지 섹션 -->
 
               <div class="w-36">
                 <!-- 로딩 스피너 (imageLoaded가 false일 때만 표시) -->
                 <div
-                  v-if="!imageLoaded"
-                  class="w-full h-full flex items-center justify-center bg-gray-200"
+                    v-if="!imageLoaded"
+                    class="w-full h-full flex items-center justify-center bg-gray-200"
                 >
                   <div class="spinner"></div>
                 </div>
                 <!-- 이미지 -->
                 <img
-                  :src="event.image"
-                  alt="Event Image"
-                  class="w-full h-full object-cover"
-                  @load="imageLoaded = true"
-                  @error="imageLoaded = true"
+                    :src="event.image"
+                    alt="Event Image"
+                    class="w-full h-full object-cover"
+                    @load="imageLoaded = true"
+                    @error="imageLoaded = true"
                 />
               </div>
 
@@ -57,8 +57,12 @@
                 </div>
                 <div class="flex justify-end">
                   <button
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                    @click="goToBuyPage"
+                      :class="[
+          'w-full py-2 px-4 rounded text-white font-bold transition-colors duration-300',
+          event.available_tickets === '0' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
+        ]"
+                      :disabled="event.available_tickets === '0'" @click="goToBuyPage(event.id)"
+
                   >
                     Buy
                   </button>
@@ -73,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import {onMounted, ref, computed} from "vue";
 //api 호출용
 
 // import axios from 'axios';
@@ -101,8 +105,8 @@ import { onMounted, ref, computed } from "vue";
 //   fetchEvents();
 // });
 
-import { useEventStore } from "~/store/event";
-import { useRouter } from "nuxt/app";
+import {useEventStore} from "~/store/event";
+import {useRouter} from "nuxt/app";
 
 // store에서 이벤트 데이터 불러오기
 const eventStore = useEventStore();
@@ -117,12 +121,11 @@ const formatDate = (dateString: string) => {
   const day = dateString.substring(6, 8);
   return `${year}.${month}.${day}`;
 };
-
-const eventId = ref(123);
+ref(123);
 const router = useRouter();
 
-const goToBuyPage = () => {
-  router.push(`/buy/${eventId.value}`);
+const goToBuyPage = (eventId: string) => {
+  router.push(`/buy/${eventId}`);
 };
 </script>
 

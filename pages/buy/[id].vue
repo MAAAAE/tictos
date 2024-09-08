@@ -1,8 +1,52 @@
 <template>
   <NuxtLayout>
-    <div>
+    <div class="container space-y-4">
+      <h2
+          class="text-2xl font-bold text-black border-b-4 border-black mb-8 pb-2"
+      >
+        concert info
+      </h2>
+      <div v-if="event" class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Event Image -->
+        <img :src="event.image" alt="Event Image" class="w-full h-48 object-cover rounded-t-lg" />
+
+        <!-- Event Information -->
+        <div class="p-6 space-y-4">
+          <!-- Event Name -->
+          <div class="flex items-center space-x-2 bg-gray-100 p-4 rounded-lg shadow-sm">
+            <FontAwesome icon="signature" class="text-gray-700 text-lg" />
+            <div class="pl-3 flex flex-col">
+              <span class="font-semibold text-gray-700 text-sm">Name:</span>
+              <p class="text-gray-900 mt-1">{{ event.name }}</p>
+            </div>
+          </div>
+
+          <!-- Event Date -->
+          <div class="flex items-center space-x-2 bg-gray-100 p-4 rounded-lg shadow-sm">
+            <FontAwesome icon="calendar-day" class="text-gray-700 text-lg" />
+            <div class="pl-3 flex flex-col">
+              <span class="font-semibold text-gray-700 text-sm">Date:</span>
+              <p class="text-gray-900 mt-1">{{ event.date }}</p>
+            </div>
+          </div>
+
+          <!-- Event Price -->
+          <div class="flex items-center space-x-2 bg-gray-100 p-4 rounded-lg shadow-sm">
+            <FontAwesome icon="money-bill" class="text-gray-700 text-lg" />
+            <div class="pl-3 flex flex-col">
+              <span class="font-semibold text-gray-700 text-sm">Price:</span>
+              <p class="text-gray-900 mt-1">{{ event.ticket_price }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2
+          class="text-2xl font-bold text-black border-b-4 border-black mb-8 pb-2"
+      >
+        buy a ticket
+      </h2>
       <!-- Form for private key input -->
-      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your account."/>
+      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your private key."/>
     </div>
   </NuxtLayout>
 </template>
@@ -13,10 +57,14 @@ import {ref} from 'vue'
 import {AptosAccount, HexString} from "aptos";
 import PrivateKeyForm from "~/components/KeyForm.vue";
 import {toast} from "vue3-toastify";
+import {useEventStore} from "~/store/event";
 
 const route = useRoute()
 const privateKey = ref('')
 const {$toast, $aptosClient} = useNuxtApp()
+
+const eventStore = useEventStore()
+const event = eventStore.getEventByIndex(route.params.id)
 
 const handleSubmit = async (key: string) => {
   const id = $toast(

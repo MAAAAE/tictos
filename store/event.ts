@@ -10,7 +10,7 @@ export const useEventStore = defineStore("event", {
         id: "0",
         name: "Rock Festival",
         ticket_price: "150",
-        image: "https://picsum.photos/seed/one/150/150",
+        image: "https://picsum.photos/seed/one/300/150",
       },
       {
         available_tickets: "50",
@@ -18,7 +18,7 @@ export const useEventStore = defineStore("event", {
         id: "1",
         name: "Jazz Night",
         ticket_price: "80",
-        image: "https://picsum.photos/seed/two/150/150",
+        image: "https://picsum.photos/seed/two/300/150",
       },
       {
         available_tickets: "200",
@@ -26,7 +26,7 @@ export const useEventStore = defineStore("event", {
         id: "2",
         name: "Pop Concert",
         ticket_price: "120",
-        image: "https://picsum.photos/seed/three/150/150",
+        image: "https://picsum.photos/seed/three/300/150",
       },
       {
         available_tickets: "5",
@@ -34,7 +34,7 @@ export const useEventStore = defineStore("event", {
         id: "3",
         name: "Classical Evening",
         ticket_price: "200",
-        image: "https://picsum.photos/seed/four/150/150",
+        image: "https://picsum.photos/seed/four/300/150",
       },
       {
         available_tickets: "0",
@@ -42,12 +42,15 @@ export const useEventStore = defineStore("event", {
         id: "4",
         name: "Indie Music Fest",
         ticket_price: "90",
-        image: "https://picsum.photos/seed/five/150/150",
+        image: "https://picsum.photos/seed/five/300/150",
       },
     ],
   }),
   getters: {
-    // 필요한 경우 getters 추가
+    getEventByIndex: (state) => (index: number) => {
+      return state.events[index];
+    },
+
   },
   actions: {
     // 이벤트 관련 데이터 업데이트 로직 추가 가능
