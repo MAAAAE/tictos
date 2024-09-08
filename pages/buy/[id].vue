@@ -46,7 +46,16 @@
         buy a ticket
       </h2>
       <!-- Form for private key input -->
-      <PrivateKeyForm @submit="handleSubmit" placeholder-text="enter your private key."/>
+      <PrivateKeyForm v-if="!user.privateKey" @submit="handleSubmit" placeholder-text="enter your private key."/>
+      <div v-else class="flex items-center justify-between">
+        <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            @click.prevent="handleSubmit(user.privateKey)"
+        >
+          Submit
+        </button>
+      </div>
     </div>
   </NuxtLayout>
 </template>
@@ -59,6 +68,9 @@ import PrivateKeyForm from "~/components/KeyForm.vue";
 import {toast} from "vue3-toastify";
 import {useEventStore} from "~/store/event";
 import {useRouter} from "nuxt/app";
+import { useAuthStore } from "~/store/auth";
+
+//99945650
 
 const route = useRoute()
 const privateKey = ref('')
@@ -66,6 +78,7 @@ const {$toast, $aptosClient} = useNuxtApp()
 
 const eventStore = useEventStore()
 const event = eventStore.getEventByIndex(route.params.id)
+const user = useAuthStore();
 const runtimeConfig = useRuntimeConfig()
 const router = useRouter();
 
@@ -85,7 +98,7 @@ const handleSubmit = async (key: string) => {
       type: "entry_function_payload",
       function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::create_ticket`,
       type_arguments: [],
-      arguments: [route.params.id],
+      arguments: [route.params.id, event.ticket_price],
     };
 
     const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);

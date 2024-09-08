@@ -3,16 +3,18 @@ import { defineStore } from 'pinia';
 interface UserPayloadInterface {
     username: string;
     password: string;
+    privateKey: string;
 }
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         authenticated: false,
         loading: false,
-        username: ''
+        username: '',
+        privateKey: '',
     }),
     actions: {
-        async authenticateUser({ username, password }: UserPayloadInterface) {
+        async authenticateUser({ username, password, privateKey }: UserPayloadInterface) {
             // useFetch from nuxt 3
             const { data, pending, error }: any = await useFetch('https://dummyjson.com/auth/login', {
                 method: 'post',
@@ -36,11 +38,14 @@ export const useAuthStore = defineStore('auth', {
 
                 this.authenticated = true; // set authenticated  state value to true
                 this.username = username;
+                this.privateKey = privateKey;
             }
         },
         logUserOut() {
             const token = useCookie('token'); // useCookie new hook in nuxt 3
             this.authenticated = false; // set authenticated  state value to false
+            this.username = '';
+            this.privateKey = '';
             token.value = null; // clear the token cookie
         },
     },
