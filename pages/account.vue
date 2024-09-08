@@ -35,30 +35,23 @@
 <script setup lang="ts">
 import { AptosAccount, HexString } from "aptos";
 import { useAuthStore } from "~/store/auth";
+import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
 
-const {$aptosClient, $toast} = useNuxtApp();
+const {$toast} = useNuxtApp();
 const user = useAuthStore();
 
 const coinBalance = ref('');
 const address = ref('');
-
-interface Coin {
-  value: string;
-}
-
 const getBalance = async () => {
   try {
+    const config = new AptosConfig({ network: Network.DEVNET });
+    const aptos = new Aptos(config);
+
     const account = new AptosAccount(HexString.ensure(user.privateKey).toUint8Array());
-    const coinResource = await $aptosClient.getAccountResource(
-        account.address(),
-        '0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>',
-    );
 
-    let data  = coinResource.data as {
-      coin: Coin
-    };
+    const accountAPTAmount: number = await aptos.getAccountAPTAmount({accountAddress: account.address().toString()})
 
-    coinBalance.value = data.coin.value;
+    coinBalance.value = String(accountAPTAmount);
     address.value = account.address().toString();
   } catch (error) {
     console.error('Error Fetching Coin Balance:', error);

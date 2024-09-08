@@ -5,7 +5,7 @@ export const useEventStore = defineStore("event", {
   state: () => ({
     events: [
       {
-        available_tickets: "10",
+        available_tickets: 10,
         date: "20240910",
         id: "0",
         name: "Rock Festival",
@@ -13,7 +13,7 @@ export const useEventStore = defineStore("event", {
         image: "https://picsum.photos/seed/one/300/150",
       },
       {
-        available_tickets: "50",
+        available_tickets: 50,
         date: "20240912",
         id: "1",
         name: "Jazz Night",
@@ -21,7 +21,7 @@ export const useEventStore = defineStore("event", {
         image: "https://picsum.photos/seed/two/300/150",
       },
       {
-        available_tickets: "200",
+        available_tickets: 200,
         date: "20240915",
         id: "2",
         name: "Pop Concert",
@@ -29,7 +29,7 @@ export const useEventStore = defineStore("event", {
         image: "https://picsum.photos/seed/three/300/150",
       },
       {
-        available_tickets: "5",
+        available_tickets: 5,
         date: "20240920",
         id: "3",
         name: "Classical Evening",
@@ -37,7 +37,7 @@ export const useEventStore = defineStore("event", {
         image: "https://picsum.photos/seed/four/300/150",
       },
       {
-        available_tickets: "0",
+        available_tickets: 0,
         date: "20240925",
         id: "4",
         name: "Indie Music Fest",
@@ -53,6 +53,9 @@ export const useEventStore = defineStore("event", {
 
   },
   actions: {
+    buying: function (index: number) {
+      this.events[index].available_tickets = this.events[index].available_tickets - 1;
+    }
     // 이벤트 관련 데이터 업데이트 로직 추가 가능
   },
 });

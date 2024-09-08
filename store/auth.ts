@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', {
                 return;
             }
             if (data.value) {
-                const token = useCookie('token', {expires: new Date(new Date().getTime() + 60 * 60 * 1000)}); // useCookie new hook in nuxt 3
+                const token = useCookie('token', {expires: new Date(new Date().getTime() + 6000 * 60 * 1000)}); // useCookie new hook in nuxt 3
                 token.value = data?.value?.token; // set token to cookie
 
                 this.authenticated = true; // set authenticated  state value to true

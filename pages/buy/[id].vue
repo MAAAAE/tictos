@@ -118,7 +118,7 @@ const handleSubmit = async (key: string) => {
       type: toast.TYPE.SUCCESS
     })
     await router.push('/tickets')
-
+    eventStore.buying(route.params.id)
   } catch (err) {
     console.error('Error initializing event store:', err);
   }
