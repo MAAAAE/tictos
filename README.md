@@ -8,10 +8,9 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 create .env file
 add two envrionment variables.
 
-(optional)
 NUXT_PUBLIC_FAUCET_URL="http://localhost:8081"
-(required)
 NUXT_PUBLIC_NODE_URL="http://localhost:8080"
+NUXT_PUBLIC_ACCOUNT_PRIVATE_KEY="<your account>"
 ```
 
 ## Setup
@@ -19,17 +18,10 @@ NUXT_PUBLIC_NODE_URL="http://localhost:8080"
 Make sure to install the dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
 
 # yarn
 yarn install
 
-# bun
-bun install
 ```
 
 ## Development Server
@@ -37,17 +29,8 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
 # yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -55,33 +38,15 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
 # yarn
 yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
 # yarn
 yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
