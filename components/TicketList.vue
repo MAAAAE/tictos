@@ -24,7 +24,9 @@
 
         <!-- Ticket Details Section -->
         <div class="flex-grow px-4">
-          <p class="text-gray-700"><strong>Owner:</strong> {{ ticket.owner }}</p>
+          <p class="text-gray-700 truncate"><strong>Owner:</strong>
+            <span class="block truncate">{{ ticket.owner }}</span>
+          </p>
           <p class="text-gray-700"><strong>Is Used:</strong> {{ ticket.is_used ? 'Yes' : 'No' }}</p>
           <p class="text-gray-700"><strong>Can Transfer:</strong> {{ ticket.can_transfer ? 'Yes' : 'No' }}</p>
           <p class="text-gray-700">
@@ -152,4 +154,14 @@ onMounted(async () => {
 
 <style scoped>
 /* Add any specific styles for this component here */
+.truncate {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flex-grow {
+  min-width: 0; /* Ensure that flex items can shrink and prevent overflow */
+}
 </style>
