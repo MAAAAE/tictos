@@ -39,22 +39,18 @@
             </div>
           </div>
         </div>
-      </div>
-      <h2
-          class="text-2xl font-bold text-black border-b-4 border-black mb-8 pb-2"
-      >
-        buy a ticket
-      </h2>
-      <!-- Form for private key input -->
-      <PrivateKeyForm v-if="!user.privateKey" @submit="handleSubmit" placeholder-text="enter your private key."/>
-      <div v-else class="flex items-center justify-between">
-        <button
-            type="submit"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            @click.prevent="handleSubmit(user.privateKey)"
-        >
-          Submit
-        </button>
+
+        <!-- Form for private key input -->
+        <PrivateKeyForm v-if="!user.privateKey" @submit="handleSubmit" placeholder-text="enter your private key."/>
+        <div v-else class="flex items-center justify-end">
+          <button
+              type="submit"
+              class="bg-cyan-50 transition text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              @click.prevent="handleSubmit(user.privateKey)"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   </NuxtLayout>

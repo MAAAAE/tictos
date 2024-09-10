@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vesp/nuxt-fontawesome'],
     fontawesome: {
         icons: {
-            solid: ['user', 'home', 'door-open', 'calendar-day', 'signature', 'money-bill'],
+            solid: ['user', 'home', 'door-open', 'calendar-day', 'signature', 'money-bill', 'bars'],
             regular: ['comment'],
             brands: ['github'],
         },
