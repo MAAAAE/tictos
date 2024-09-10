@@ -42,13 +42,13 @@
 
         <!-- Form for private key input -->
         <PrivateKeyForm v-if="!user.privateKey" @submit="handleSubmit" placeholder-text="enter your private key."/>
-        <div v-else class="flex items-center justify-end">
+        <div v-else class="flex items-center justify-end p-4">
           <button
               type="submit"
               class="bg-cyan-50 transition text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               @click.prevent="handleSubmit(user.privateKey)"
           >
-            Submit
+            Buy Ticket
           </button>
         </div>
       </div>
