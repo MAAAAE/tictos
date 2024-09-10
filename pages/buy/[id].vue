@@ -92,7 +92,7 @@ const handleSubmit = async (key: string) => {
       type: "entry_function_payload",
       function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::create_ticket`,
       type_arguments: [],
-      arguments: [route.params.id, event.ticket_price * 100_000_000],
+      arguments: [route.params.id, event.ticket_price],
     };
 
     const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);
