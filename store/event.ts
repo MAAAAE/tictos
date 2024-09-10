@@ -17,7 +17,7 @@ export const useEventStore = defineStore("event", {
         date: "20240912",
         id: "1",
         name: "Jazz Night",
-        ticket_price: 80,
+        ticket_price: 2,
         image: "https://picsum.photos/seed/two/300/150",
       },
       {
