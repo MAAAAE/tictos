@@ -127,12 +127,19 @@ const handleSubmit = async (recipient: string) => {
     // Wait for the transaction to be confirmed
     await $aptosClient.waitForTransaction(txnResponse.hash);
 
+    const transaction = await $aptosClient.getTransactionByHash(txnResponse.hash) as TransactionStatus;
+
+    if (!transaction.success) {
+      throw new Error(transaction.vm_status);
+    }
+
+    selectedTicketId.value = '';
+    $toast('transferred successfully!')
+    await getTicketStore(user.privateKey);
+
   } catch (e) {
     $toast.error(`error occur during transferring. ${e}`)
   }
-  selectedTicketId.value = '';
-  $toast('transferred successfully!')
-  await getTicketStore(user.privateKey)
 };
 
 
@@ -147,6 +154,11 @@ const transferTicket = (ticketId: string) => {
 onMounted(async () => {
   await getTicketStore(user.privateKey);
 })
+
+interface TransactionStatus {
+  success: boolean;
+  vm_status: string;
+}
 
 // Fetch tickets on component mount
 
