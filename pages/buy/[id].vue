@@ -90,7 +90,7 @@ const handleSubmit = async (key: string) => {
     const account = new AptosAccount(HexString.ensure(privateKey.value).toUint8Array());
     const payload = {
       type: "entry_function_payload",
-      function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::create_ticket`,
+      function: `${runtimeConfig.public.accountPrivateKey}::EventTickets::create_ticket`,
       type_arguments: [],
       arguments: [route.params.id, event.ticket_price],
     };

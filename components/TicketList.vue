@@ -40,7 +40,7 @@
           <button
               v-if="ticket.can_transfer"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-              @click="transferTicket(ticket.id)"
+              @click="transferTicket(ticket.id, ticket.event_id)"
           >
             Transfer Ticket
           </button>
@@ -84,7 +84,7 @@ const userAccount = ref('');
 // Mock function to simulate fetching tickets (replace with real logic)
 const runtimeConfig = useRuntimeConfig();
 
-const resourceType = `${runtimeConfig.public.accountPrivateKey}::EventTicket::TicketStore`; // Replace with the correct module and resource path
+const resourceType = `${runtimeConfig.public.accountPrivateKey}::EventTickets::TicketStore`; // Replace with the correct module and resource path
 
 async function getTicketStore(key: string) {
   try {
@@ -105,6 +105,7 @@ async function getTicketStore(key: string) {
 
 const showModal = ref(false);
 const selectedTicketId = ref('');
+const selectedEventId = ref('');
 
 const handleSubmit = async (recipient: string) => {
   // Handle the recipient data here
@@ -114,9 +115,9 @@ const handleSubmit = async (recipient: string) => {
     const account = new AptosAccount(HexString.ensure(user.privateKey).toUint8Array());
     const payload = {
       type: "entry_function_payload",
-      function: `${runtimeConfig.public.accountPrivateKey}::EventTicket::transfer_ticket`,
+      function: `${runtimeConfig.public.accountPrivateKey}::EventTickets::transfer_ticket`,
       type_arguments: [],
-      arguments: [recipient, selectedTicketId.value],
+      arguments: [recipient, selectedEventId.value, selectedTicketId.value],
     };
 
     const txnRequest = await $aptosClient.generateTransaction(account.address(), payload);
@@ -134,6 +135,7 @@ const handleSubmit = async (recipient: string) => {
     }
 
     selectedTicketId.value = '';
+    selectedEventId.value = '';
     $toast('transferred successfully!')
     await getTicketStore(user.privateKey);
 
@@ -144,10 +146,11 @@ const handleSubmit = async (recipient: string) => {
 
 
 // Transfer ticket function (mock, replace with real logic)
-const transferTicket = (ticketId: string) => {
-  console.log(`Transfer ticket with ID: ${ticketId}`);
+const transferTicket = (ticketId: string, eventId: string) => {
+  console.log(`Transfer ticket with ID: ${ticketId} EventId: ${eventId}`);
   showModal.value = true
-  selectedTicketId.value = ticketId
+  selectedTicketId.value = ticketId;
+  selectedEventId.value = eventId;
   // Wait for the transaction to be confirmed
 };
 
